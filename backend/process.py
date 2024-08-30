@@ -4,12 +4,11 @@ from chromadb.config import Settings
 
 document_id = 1
 
-
 def process_files(documents):
     chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet",
                                              persist_directory="local_db"
                                              ))
-    collection = chroma_client.get_or_create_collection(name="docs_rust_collection")
+    collection = chroma_client.get_or_create_collection(name="my_collection")
 
     for file in documents:
         print("processing file: " + file.filename)
@@ -18,7 +17,6 @@ def process_files(documents):
         document_title = get_title(markdown_text)
         generate_embeddings(chunks, document_title, file.filename, collection)
     chroma_client.persist()
-
 
 def generate_embeddings(chunks, document_title, file_name, collection):
     global document_id
@@ -33,7 +31,6 @@ def generate_embeddings(chunks, document_title, file_name, collection):
         )
         document_id = document_id + 1
 
-
 def get_title(file):
     match = re.search(r"title:\s+(.+)\s+", file)
     if match:
@@ -42,13 +39,12 @@ def get_title(file):
     else:
         " "
 
-
 def split_text(file):
     separator = "\n### "
     return file.split(separator)
 
-
 def query_collection(query):
+    # print('Querying collection', query)
     chroma_client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet",
                                              persist_directory="local_db"
                                              ))

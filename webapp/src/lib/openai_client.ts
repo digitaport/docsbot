@@ -10,16 +10,17 @@ export async function createChatCompletion(
 	document: string[],
 	question: string
 ): Promise<string | null> {
+	console.log('Creating chat completion');
 	let messages = [];
-	let systemContent = `You are a Rust programming language AI helper, you are an expert in Rust programming language. 
-		You get your knowledge about Rust from the following information delimited between three ticks.`;
+	let systemContent = `You are a company AI helper, and you are an expert in their systems documentation. 
+		You get your knowledge about the company from the following information delimited between three ticks.`;
 
 	systemContent += '\n\n```';
 	for (let i = 0; i < document.length; i++) {
 		systemContent += '\n' + document[i];
 	}
 	systemContent +=
-		'\n```\n\nThe user will ask you questions about Rust programming language and you should reply in a concise way and include code snippets whenever you can.';
+		'\n```\n\nThe user will ask you questions about their systems and you should reply in a concise way and include code snippets whenever you can.';
 
 	messages.push({
 		role: 'system',

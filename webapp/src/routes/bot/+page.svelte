@@ -22,7 +22,6 @@
 		const response = await fetch(`${PUBLIC_PROCESS_FILES_SERVER}/query?text=${query}`, {
 			method: 'GET'
 		});
-		console.log('test');
 		let result: QueryResult = await response.json();
 		documents = result.documents[0];
 		metadatas = result.metadatas[0];
